@@ -2,13 +2,10 @@ package gui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-
 import javafx.scene.image.ImageView;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -58,7 +55,8 @@ public class GuiControler implements Initializable {
         setMouseTransparentToFalse();
 
     }
-    private void gameWindowAction1(ImageView imageView, int witchWindow) {
+
+    private void gameWindowAction(ImageView imageView, int witchWindow) {
         this.witchWindow = witchWindow;
         if (turaGracza == false) {
             imageView.setImage(kolkoImg);
@@ -78,10 +76,12 @@ public class GuiControler implements Initializable {
             imageView.setMouseTransparent(true);
 
         }
+        ifWin();
 
 
     }
-    private void setImageToStart(){
+
+    private void setImageToStart() {
         gameWindow1.setImage(nicImg);
         gameWindow2.setImage(nicImg);
         gameWindow3.setImage(nicImg);
@@ -93,16 +93,18 @@ public class GuiControler implements Initializable {
         gameWindow9.setImage(nicImg);
         turaGraczaWindow.setImage(kolkoSmallImg);
     }
-    private void setToStartValeue(){
+
+    private void setToStartValeue() {
         for (int i = 0; i <= 8; i++) {
             isKliked[i] = false;
 
         }
         for (int i = 0; i <= 8; i++) {
-            whoKliked[i] = 3;
+            whoKliked[i] = 3+i;
         }
     }
-    private void setMouseTransparentToFalse(){
+
+    private void setMouseTransparentToFalse() {
         gameWindow1.setMouseTransparent(false);
         gameWindow2.setMouseTransparent(false);
         gameWindow3.setMouseTransparent(false);
@@ -114,6 +116,39 @@ public class GuiControler implements Initializable {
         gameWindow9.setMouseTransparent(false);
     }
 
+    private void winInformation() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Koniec Gry");
+        alert.setHeaderText(null);
+        if(turaGracza==false)
+            alert.setContentText("Brawo wygrywa: Krzyżyk   Gratulacje!!");
+        else if(turaGracza==true)
+            alert.setContentText("Brawo wygrywa: Kółko   Gratulacje!!");
+
+        alert.showAndWait();
+    }
+
+    private void ifWin() {
+        if (checkWin()) {
+            winInformation();
+
+        }
+    }
+
+    private boolean checkWin() {
+        if (whoKliked[0] == whoKliked[1] && whoKliked[0] == whoKliked[2] ||
+                whoKliked[3] == whoKliked[4] && whoKliked[3] == whoKliked[5] ||
+                whoKliked[6] == whoKliked[7] && whoKliked[6] == whoKliked[8] ||
+                whoKliked[0] == whoKliked[3] && whoKliked[0] == whoKliked[8] ||
+                whoKliked[1] == whoKliked[4] && whoKliked[1] == whoKliked[7] ||
+                whoKliked[2] == whoKliked[5] && whoKliked[2] == whoKliked[8] ||
+                whoKliked[0] == whoKliked[4] && whoKliked[0] == whoKliked[8] ||
+                whoKliked[2] == whoKliked[4] && whoKliked[2] == whoKliked[6]) {
+            return true;
+        } else return false;
+    }
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setToStartValeue();
@@ -121,31 +156,31 @@ public class GuiControler implements Initializable {
         setMouseTransparentToFalse();
 
         gameWindow1.setOnMouseClicked((event -> {
-            gameWindowAction1(gameWindow1, 0);
+            gameWindowAction(gameWindow1, 0);
         }));
         gameWindow2.setOnMouseClicked((event -> {
-            gameWindowAction1(gameWindow2, 1);
+            gameWindowAction(gameWindow2, 1);
         }));
         gameWindow3.setOnMouseClicked((event -> {
-            gameWindowAction1(gameWindow3, 2);
+            gameWindowAction(gameWindow3, 2);
         }));
         gameWindow4.setOnMouseClicked((event -> {
-            gameWindowAction1(gameWindow4, 3);
+            gameWindowAction(gameWindow4, 3);
         }));
         gameWindow5.setOnMouseClicked((event -> {
-            gameWindowAction1(gameWindow5, 4);
+            gameWindowAction(gameWindow5, 4);
         }));
         gameWindow6.setOnMouseClicked((event -> {
-            gameWindowAction1(gameWindow6, 5);
+            gameWindowAction(gameWindow6, 5);
         }));
         gameWindow7.setOnMouseClicked((event -> {
-            gameWindowAction1(gameWindow7, 6);
+            gameWindowAction(gameWindow7, 6);
         }));
         gameWindow8.setOnMouseClicked((event -> {
-            gameWindowAction1(gameWindow8, 7);
+            gameWindowAction(gameWindow8, 7);
         }));
         gameWindow9.setOnMouseClicked((event -> {
-            gameWindowAction1(gameWindow9, 8);
+            gameWindowAction(gameWindow9, 8);
         }));
 
 
